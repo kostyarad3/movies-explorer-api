@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 const allowedCors = [
-  // 'https://api.mesto.kostyarad.nomoreparties.sbs',
-  // 'https://mesto.kostyarad.nomoreparties.sbs',
-  // 'http://api.mesto.kostyarad.nomoreparties.sbs',
-  // 'http://mesto.kostyarad.nomoreparties.sbs',
+  'https://movies.kostyarad.nomoredomains.xyz',
+  'http://api.movies.kostyarad.nomoredomains.xyz',
+  'http://movies.kostyarad.nomoredomains.xyz',
+  'https://api.movies.kostyarad.nomoredomains.xyz',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
