@@ -12,8 +12,9 @@ const NotFoundError = require('./errors/not-found-err');
 const { auth } = require('./middlewares/auth');
 const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
+const { DB_URL } = require('./utils/constants')
 
-const { PORT = 3000, DB_URL } = process.env;
+const { PORT = 3000 } = process.env;
 
 mongoose
   .connect(DB_URL)
