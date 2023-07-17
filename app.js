@@ -13,12 +13,12 @@ const { auth } = require('./middlewares/auth');
 const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
 
-const { PORT = 3000, BASE_URL } = process.env;
+const { PORT = 3000, DB_URL } = process.env;
 
 mongoose
-  .connect(BASE_URL)
+  .connect(DB_URL)
   .then(() => {
-    console.log(`Successfully connected on ${BASE_URL}`);
+    console.log(`Successfully connected on ${DB_URL}`);
   })
   .catch((err) => {
     console.log(`Connection to database failed: ${err}`);
