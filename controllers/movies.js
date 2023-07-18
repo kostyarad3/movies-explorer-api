@@ -4,8 +4,16 @@ const ForbiddenError = require('../errors/forbidden-err');
 const NotFoundError = require('../errors/not-found-err');
 
 function getMovies(req, res, next) {
+  const ownerId = req.user._id;
   Movie.find({})
-    .then((movies) => res.send({ data: movies }))
+    .then((movies) => {
+      const savedMovies = movies.filter((movie) => movie.owner.toString() === ownerId);
+      if (savedMovies) {
+        res.send({ data: savedMovies });
+      } else {
+        next(new NotFoundError('У вас нет сохраненных фильмов'));
+      }
+    })
     .catch(next);
 }
 
@@ -53,7 +61,7 @@ function createMovie(req, res, next) {
 
 function deleteMovie(req, res, next) {
   Movie.findById(req.params.movieId)
-    .orFail(new NotFoundError('Такого фильма не существует'))
+    .orFail(new NotFoundError('Фильм не найден'))
     .then((card) => {
       if (card.owner.equals(req.user._id)) {
         Movie.deleteOne(card)
