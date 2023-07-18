@@ -29,11 +29,22 @@ function updateUserInfo(req, res, next) {
     },
   )
     .then((user) => {
-      if (user) return res.send({ user });
-
-      throw new NotFoundError('Пользователь с таким id не найден');
+      if (!user) {
+        throw new NotFoundError('Пользователь с таким id не найден');
+      }
+      return res.send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+        return;
+      }
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
+        return;
+      }
+      next(err);
+    });
 }
 
 function login(req, res, next) {
