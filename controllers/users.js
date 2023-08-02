@@ -19,10 +19,10 @@ function getCurrentUser(req, res, next) {
 }
 
 function updateUserInfo(req, res, next) {
-  const { email, name } = req.body;
+  const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { email, name },
+    { name, email },
     {
       new: true,
       runValidators: true,
@@ -64,21 +64,21 @@ function login(req, res, next) {
 
 function createUser(req, res, next) {
   const {
-    email, password, name,
+    name, email, password,
   } = req.body;
 
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
+      name,
       email,
       password: hash,
-      name,
     }))
     .then((user) => {
       const { _id } = user;
 
       res.status(201).send({
-        email,
         name,
+        email,
         _id,
       });
     })
